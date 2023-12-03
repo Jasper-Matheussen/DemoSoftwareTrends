@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>htmx Showcase</title>
+    <!-- Include htmx library -->
+    <script src="https://unpkg.com/htmx.org@1.9.9"></script>
+    <!-- Include tailwind -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.0.2/tailwind.min.css">
+</head>
+<body>
+<div class="p-4">
+    <h1 class="text-3xl font-bold mb-4">htmx Showcase</h1>
+
+    <h3 class="text-lg font-semibold mt-4">
+        Active search:
+    </h3>
+
+    <label class="block mt-2">
+        <input class="form-input border border-gray-300 py-2 px-4 w-full rounded-md transition duration-300 focus:outline-none focus:border-blue-500 focus:ring focus:ring-blue-200"
+               type="search" name="search"
+               placeholder="Begin Typing To Search..."
+               hx-post="/api/search"
+               hx-trigger="input changed delay:500ms, search"
+               hx-target="#search-results"
+               hx-indicator="#asearch"
+        >
+    </label>
+
+    <div class="mt-4">
+        Search results: <span id="search-results" class="text-blue-500">None</span>
+    </div>
+
+    <span id="asearch" class="htmx-indicator text-blue-500 ml-2">
+        Searching...
+      </span>
+
+    <form class="mt-8" hx-post="/api/update" hx-trigger="submit" hx-target="#search-results" hx-confirm="Are you sure?"
+          hx-vals="input[name='data']" hx-indicator="#update" hx-swap="innerHTML">
+        <label class="block mb-2" for="inputData">Update Data:</label>
+        <input class="form-input border border-gray-300 py-2 px-4 w-full rounded-md mb-2 transition duration-300 focus:outline-none focus:border-blue-500 focus:ring focus:ring-blue-200"
+               type="text" id="inputData" name="data" required>
+        <button class="bg-blue-500 text-white py-2 px-4 rounded-md transition duration-300 hover:bg-blue-700"
+                type="submit">Submit
+        </button>
+    </form>
+     <span id="update" class="htmx-indicator text-blue-500 ml-2">
+        Updating...
+      </span>
+</div>
+</body>
+</html>
